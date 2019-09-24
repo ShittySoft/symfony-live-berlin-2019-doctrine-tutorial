@@ -1,0 +1,17 @@
+paths:
+  - ./src
+  - ./public
+exclude_files:
+  - .*test.*
+layers:
+  - name: Domain
+    collectors:
+      - type: className
+        regex: ^Authentication.*
+  - name: Infrastructure
+    collectors:
+      - type: className
+        regex: ^Infrastructure.*
+ruleset:
+  Infrastructure:
+    - Domain

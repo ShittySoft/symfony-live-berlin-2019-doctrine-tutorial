@@ -1,22 +1,22 @@
 <?php
 
-$usersFile = __DIR__ . '/../data/users.json';
-$users = \json_decode(
-    (string) @\file_get_contents($usersFile),
-    true
-) ?: [];
+require_once __DIR__ . '/../vendor/autoload.php';
 
-if (! \array_key_exists($_POST['emailAddress'], $users)) {
+$users = new \Infrastructure\Authentication\Repository\JsonFileUsers(__DIR__ . '/../data/users.json');
+
+if (! $users->isRegistered($_POST['emailAddress'])) {
     echo 'Login failed';
     return;
 }
 
-if (! \password_verify($_POST['password'], $users[$_POST['emailAddress']])) {
+$user = $users->get($_POST['emailAddress']);
+
+if (! \password_verify($_POST['password'], $user->passwordHash())) {
     echo 'Login failed';
     return;
 }
 
 \session_start();
-$_SESSION['user'] = $_POST['emailAddress'];
+$_SESSION['user'] = $user->emailAddress();
 
 echo 'OK';

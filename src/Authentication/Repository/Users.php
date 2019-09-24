@@ -2,7 +2,7 @@
 
 namespace Authentication\Repository;
 
-use Authentication\Entity\User;
+use Authentication\Aggregate\User;
 
 interface Users
 {

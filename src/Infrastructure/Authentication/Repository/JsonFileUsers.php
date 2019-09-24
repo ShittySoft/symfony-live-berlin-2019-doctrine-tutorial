@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Authentication\Repository;
 
-use Authentication\Entity\User;
+use Authentication\Aggregate\User;
 use Authentication\Repository\Users;
 
 final class JsonFileUsers implements Users
@@ -34,14 +34,20 @@ final class JsonFileUsers implements Users
             throw new \Exception(\sprintf('User "%s" is not registered', $emailAddress));
         }
 
-        return new User($emailAddress, $users[$emailAddress]);
+        return User::unserializeFrom($emailAddress, $users[$emailAddress]);
     }
 
     public function store(User $user) : void
     {
         $users = \json_decode(@\file_get_contents($this->path), true) ?: [];
 
-        $users[$user->emailAddress()] = $user->passwordHash();
+        $reflectionAddress = new \ReflectionProperty(User::class, 'emailAddress');
+        $reflectionPasswordHash = new \ReflectionProperty(User::class, 'passwordHash');
+
+        $reflectionAddress->setAccessible(true);
+        $reflectionPasswordHash->setAccessible(true);
+
+        $users[$reflectionAddress->getValue($user)] = $reflectionPasswordHash->getValue($user);
 
         \file_put_contents($this->path, \json_encode($users));
     }

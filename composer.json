@@ -24,5 +24,10 @@
             "Test\\Specification\\": "test/Specification",
             "Test\\Unit\\": "test/Unit"
         }
+    },
+    "config": {
+        "platform": {
+            "php": "7.1.3"
+        }
     }
 }

@@ -11,7 +11,7 @@ if ($users->isRegistered($_POST['emailAddress'])) {
 
 $passwordHash = \password_hash($_POST['password'], \PASSWORD_DEFAULT);
 
-$users->store(new \Infrastructure\Authentication\Entity\User($_POST['emailAddress'], $passwordHash));
+$users->store(new \Authentication\Entity\User($_POST['emailAddress'], $passwordHash));
 
 \error_log(\sprintf('Here goes an email to "%s"', $_POST['emailAddress']));
 

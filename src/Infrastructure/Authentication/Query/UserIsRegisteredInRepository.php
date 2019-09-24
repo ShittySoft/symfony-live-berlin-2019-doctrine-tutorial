@@ -5,6 +5,7 @@ namespace Infrastructure\Authentication\Query;
 use Authentication\Entity\User;
 use Authentication\Query\UserIsRegistered;
 use Authentication\Repository\Users;
+use Authentication\Value\EmailAddress;
 
 final class UserIsRegisteredInRepository implements UserIsRegistered
 {
@@ -16,7 +17,7 @@ final class UserIsRegisteredInRepository implements UserIsRegistered
         $this->users = $users;
     }
 
-    public function __invoke(string $emailAddress) : bool
+    public function __invoke(EmailAddress $emailAddress) : bool
     {
         return $this->users->isRegistered($emailAddress);
     }

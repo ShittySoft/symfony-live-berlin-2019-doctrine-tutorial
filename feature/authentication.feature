@@ -9,6 +9,12 @@ Feature: A user can log in and logout
     Given there is a registered user
     Then the user can log into the website
 
+  Scenario: Different users can log into to the website
+    Given "bob" is a registered user
+    And "alice" is a registered user
+    When "bob" logs into the website
+    Then "bob" should be logged in
+
   Scenario: A user cannot log into the website
     Given there is a registered user
     Then the user cannot log into the website with a non-matching password

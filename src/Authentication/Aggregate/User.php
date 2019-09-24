@@ -24,11 +24,6 @@ class User
         $this->passwordHash = $passwordHash;
     }
 
-    public static function unserializeFrom(EmailAddress $emailAddress, PasswordHash $passwordHash) : self
-    {
-        return new self($emailAddress, $passwordHash);
-    }
-
     public static function register(
         UserIsRegistered $isRegistered,
         HashPassword $hashPassword,

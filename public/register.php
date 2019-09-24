@@ -6,12 +6,15 @@ use Authentication\Aggregate\User;
 use Authentication\Value\EmailAddress;
 use Authentication\Value\Password;
 use Infrastructure\Authentication\Query\UserIsRegisteredInRepository;
-use Infrastructure\Authentication\Repository\JsonFileUsers;
+use Infrastructure\Authentication\Repository\DoctrineRepositoryUsers;
 use Infrastructure\Authentication\Service\PhpHashPassword;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+$entityManager = require __DIR__ . '/../bootstrap.php';
 
-$users = new JsonFileUsers(__DIR__ . '/../data/users.json');
+$users = new DoctrineRepositoryUsers(
+    $entityManager->getRepository(User::class),
+    $entityManager
+);
 $email = EmailAddress::fromString($_POST['emailAddress']);
 $password = Password::fromString($_POST['password']);
 

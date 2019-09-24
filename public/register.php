@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$users = new \Authentication\Repository\JsonFileUsers(__DIR__ . '/../data/users.json');
+$users = new \Infrastructure\Authentication\Repository\JsonFileUsers(__DIR__ . '/../data/users.json');
 
 if ($users->isRegistered($_POST['emailAddress'])) {
     echo 'Already registered';
